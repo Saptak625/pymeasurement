@@ -1,4 +1,7 @@
 import unittest
+import sys
+import os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 from pymeasurement import Measurement
 from pymeasurement.sigfig import SigFig
 
