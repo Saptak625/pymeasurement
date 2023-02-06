@@ -72,7 +72,7 @@ class TestMeasurement(unittest.TestCase):
 
     def test_add_measurement_to_scalar(self):
         m1 = Measurement("2.0", uncertainty="0.13", units="m")
-        m2 = m1 + 2
+        m2 = m1 + Measurement.fromFloat(2, units="m")
         self.assertEqual(m2.sample, SigFig("4.0"))
         self.assertEqual(m2.uncertainty, SigFig("0.1"))
         self.assertEqual(m2.units, "m")
@@ -80,7 +80,7 @@ class TestMeasurement(unittest.TestCase):
 
     def test_subtract_scalar_from_measurement(self):
         m1 = Measurement("2.0", uncertainty="0.13", units="m")
-        m2 = m1 - 2
+        m2 = m1 - Measurement.fromFloat(2, units="m")
         self.assertEqual(m2.sample, SigFig("0.0"))
         self.assertEqual(m2.uncertainty, SigFig("0.1"))
         self.assertEqual(m2.units, "m")
@@ -126,7 +126,7 @@ class TestMeasurement(unittest.TestCase):
         m1 = Measurement.fromStr("2.0 +/- 0.13 m")
         m2 = Measurement.fromStr("3.0 +/- 0.1 m")
         m3 = Measurement.fromStr("4.0 +/- 0.1 m")
-        m4 = sum([m1, m2, m3])
+        m4 = Measurement.sum([m1, m2, m3])
         self.assertEqual(m4.sample, SigFig("9.0"))
         self.assertEqual(m4.uncertainty, SigFig("0.3"))
         self.assertEqual(m4.units, "m")

@@ -161,11 +161,11 @@ class Measurement:
         sample = sample.replace('a', '')
     return Measurement(sample.strip(), precision=precision, uncertainty=(uncertainty.strip() if isinstance(uncertainty, str) else uncertainty), digital=digital, analog=analog, units=units)
 
-  def fromFloat(f): #Assume float is a constant with infinite precision and no uncertainty.
+  def fromFloat(f, units=''): #Assume float is a constant with infinite precision and no uncertainty.
     """
     Creates a Measurement constant from a float.
     """
-    return Measurement.fromStr(f'{f}c')
+    return Measurement.fromStr(f'{f}c {units}')
   
   def toAbsolute(self):
     """
@@ -287,8 +287,6 @@ class Measurement:
     """
     Returns the sum of the two Measurement objects.
     """
-    if isinstance(other, float) or isinstance(other, int):
-      other = Measurement.fromStr(f'{other}c {self.units}')
     if self.nUnits != other.nUnits or self.dUnits != other.dUnits:
       raise Exception(f'Measurement Error: Cannot add {self} and {other} with different units.')
     uSum = SigFig('0', constant=True)
