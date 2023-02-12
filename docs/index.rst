@@ -7,7 +7,7 @@ Welcome to pymeasurement's documentation!
 =========================================
 A Measurement Calculator with Fixed Point Precision, Uncertainties, and Units.
 
-View on PyPi at https://pypi.org/project/pymeasurement/ and on Github at https://github.com/Saptak625/pymeasurement.
+View on `PyPi <https://pypi.org/project/pymeasurement/>`_ and on `Github <https://github.com/Saptak625/pymeasurement>`_.
 
 .. toctree::
    :maxdepth: 2
@@ -23,9 +23,16 @@ Indices and tables
 * :ref:`search`
 
 
-Usage
-=====
-``pip install pymeasurement``
+Installation
+============
+
+pymeasurement is distributed on `PyPi <https://pypi.org/project/pymeasurement/>`_. 
+
+.. code:: bash
+
+    pip install pymeasurement
+
+
 
 Documentation
 =============
