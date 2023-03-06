@@ -3,6 +3,10 @@
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
+import os
+import sys
+sys.path.insert(0, os.path.abspath('../src/'))
+
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
@@ -15,7 +19,11 @@ release = '1.0.6'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    'sphinx_copybutton'
+    'sphinx_copybutton',
+    'sphinx.ext.autodoc',
+    'sphinx.ext.viewcode',
+    'sphinx.ext.githubpages',
+    'sphinx.ext.doctest'
 ]
 
 templates_path = ['_templates']
@@ -29,15 +37,6 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 html_theme = 'furo'
 html_static_path = ['_static']
 
-# html_theme_options = {
-#     "github_user": "Saptak625",
-#     "github_repo": "pymeasurement",
-#     "github_button": True,
-#     "github_type": "star",
-#     "github_count": True,
-#     "sidebar_width": "300px",
-# }
-
 # html_sidebars = {
 #     "**": [
 #         "about.html",
@@ -47,3 +46,8 @@ html_static_path = ['_static']
 #         "donate.html",
 #     ]
 # }
+# html_sidebars = {
+#     "index": ["localtoc.html", "search.html"],
+#     "**": ["localtoc.html", "search.html"],
+# }
+# singlehtml_sidebars = {"index": ["localtoc.html", "search.html"]}

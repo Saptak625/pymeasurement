@@ -6,23 +6,37 @@ class Measurement:
   A class to represent a SigFig sample with a SigFig uncertainty and corresponding units.
   This class can be used to perform calculations with uncertainty propagation.
   Units are also automatically derived through operations with other measurements.
+
+  :param sample: The sample value as a SigFig object or a string.
+  :type sample: SigFig or str
+  :param precision: The number of significant figures to use when printing the number. If None, the number of significant figures will be automatically determined.
+  :type precision: int
+  :param uncertainty: The uncertainty of the sample as a SigFig object or a string.
+  :type uncertainty: SigFig or str
+  :param uncertaintyPercent: If True, the uncertainty will be interpreted as a percentage of the sample value.
+  :type uncertaintyPercent: bool
+  :param digital: If True, the uncertainty will be automatically determined based on the precision of the device.
+  :type digital: bool
+  :param analog: If True, the uncertainty will be automatically determined based on the precision of the device.
+  :type analog: bool
+  :param units: The units of the measurement as a string.
+  :type units: str
+  :param P: The number of significant figures to use when printing the number. If None, the number of significant figures will be automatically determined.
+  :type P: int
+  :param U: The uncertainty of the sample as a SigFig object or a string.
+  :type U: SigFig or str
+  :param UP: If True, the uncertainty will be interpreted as a percentage of the sample value.
+  :type UP: bool
+  :param D: If True, the uncertainty will be automatically determined based on the precision of the device.
+  :type D: bool
+  :param A: If True, the uncertainty will be automatically determined based on the precision of the device.
+  :type A: bool
+  :param UN: The units of the measurement as a string.
+  :type UN: str
   """
   def __init__(self, sample, precision=None, uncertainty=None, uncertaintyPercent=False, digital=False, analog=False, units=None, P=None, U=None, UP=False, D=False, A=False, UN=None):
     """
-    __init__
-    sample: The sample value as a SigFig object or a string.
-    precision: The number of significant figures to use when printing the number. If None, the number of significant figures will be automatically determined.
-    uncertainty: The uncertainty of the sample as a SigFig object or a string.
-    uncertaintyPercent: If True, the uncertainty will be interpreted as a percentage of the sample value.
-    digital: If True, the uncertainty will be automatically determined based on the precision of the device.
-    analog: If True, the uncertainty will be automatically determined based on the precision of the device.
-    units: The units of the measurement as a string.
-    P: The number of significant figures to use when printing the number. If None, the number of significant figures will be automatically determined.
-    U: The uncertainty of the sample as a SigFig object or a string.
-    UP: If True, the uncertainty will be interpreted as a percentage of the sample value.
-    D: If True, the uncertainty will be automatically determined based on the precision of the device.
-    A: If True, the uncertainty will be automatically determined based on the precision of the device.
-    UN: The units of the measurement as a string.
+    Measurement Constructor
     """
     if P is not None:
       precision = P
@@ -115,11 +129,15 @@ class Measurement:
     self.units = Measurement.formatUnits(self.nUnits, self.dUnits)
 
   def fromStr(string):
-    """
-    Creates a Measurement object from a string.
+    """Creates a Measurement object from a string.
     The string must be in the form of a number, uncertainty, and units.
     The uncertainty can be in the form of a percentage or a number.
     A 'a' or 'd' can be used to indicate an analog or digital device for automatic uncertainty determination.
+
+    :param string: The string to create the Measurement object from.
+    :type string: str
+    :return: The Measurement object created from the string.
+    :rtype: Measurement
     """
     sample = string.strip()
     uncertainty = None
@@ -135,7 +153,7 @@ class Measurement:
         sample, _, uncertainty, *units = values
         if len(units) == 2: # Assuming form will mol H2O
           if '_' not in units[1]:
-            from includes.chemistry.compound import Compound
+            from pymeasurement.util.chem.compound import Compound
             units[1] = str(Compound(units[1])) # Format Compound String
         units = ' '.join(units)
     else:
@@ -143,7 +161,7 @@ class Measurement:
         sample, *units = values
         if len(units) == 2: # Assuming form will mol H2O
           if '_' not in units[1]:
-            from includes.chemistry.compound import Compound
+            from pymeasurement.util.chem.compound import Compound
             units[1] = str(Compound(units[1])) # Format Compound String
         units = ' '.join(units)
     precision = None
@@ -164,12 +182,22 @@ class Measurement:
   def fromFloat(f, units=''): #Assume float is a constant with infinite precision and no uncertainty.
     """
     Creates a Measurement constant from a float.
+
+    :param f: The float to create the Measurement constant from.
+    :type f: float
+    :param units: The units of the Measurement constant.
+    :type units: str
+    :return: The Measurement constant created from the float.
+    :rtype: Measurement
     """
     return Measurement.fromStr(f'{f}c {units}')
   
   def toAbsolute(self):
     """
     Converts the uncertainty to an absolute value. Note that this mutates the object.
+
+    :return: The Measurement object with the uncertainty converted to an absolute value.
+    :rtype: Measurement
     """
     if self.uncertaintyPercent and isinstance(self.uncertainty, SigFig):
       self.uncertaintyPercent = False
@@ -180,6 +208,9 @@ class Measurement:
   def toPercent(self):
     """
     Converts the uncertainty to a percentage. Note that this mutates the object.
+
+    :return: The Measurement object with the uncertainty converted to a percentage.
+    :rtype: Measurement
     """
     if not self.uncertaintyPercent and isinstance(self.uncertainty, SigFig):
       self.uncertaintyPercent = True
@@ -190,36 +221,62 @@ class Measurement:
   def absolute(m):
     """
     Returns a copy of the Measurement with the uncertainty converted to an absolute value.
+
+    :return: A copy of the Measurement with the uncertainty converted to an absolute value.
+    :rtype: Measurement
     """
     return m.deepCopy().toAbsolute()
 
   def percent(m):
     """
     Returns a copy of the Measurement with the uncertainty converted to a percentage.
+
+    :return: A copy of the Measurement with the uncertainty converted to a percentage.
+    :rtype: Measurement
     """
     return m.deepCopy().toPercent()
   
   def deepCopy(self):
     """
     Returns a deep copy of the Measurement object.
+
+    :return: A deep copy of the Measurement object.
+    :rtype: Measurement
     """
     return Measurement(self.sample.deepCopy(), uncertainty = self.uncertainty.deepCopy() if self.uncertainty is not None else None, uncertaintyPercent = self.uncertaintyPercent, units=self.units)
   
   def __str__(self):
     """
     Returns a string representation of the Measurement object.
+
+    :return: A string representation of the Measurement object.
+    :rtype: str
     """
     return str(self.sample) + (f' +/- {self.uncertainty}' + ('%' if self.uncertaintyPercent else '') if isinstance(self.uncertainty, SigFig) else '') + (f' {Measurement.formatUnits(self.nUnits, self.dUnits)}' if self.units is not None else '')
 
   def __repr__(self):
     """
     Returns a string representation of the Measurement object.
+
+    :return: A string representation of the Measurement object.
+    :rtype: str
     """
     return str(self)
 
   def multUnits(nUnits1, dUnits1, nUnits2, dUnits2):
     """
     Multiplies two sets of units.
+
+    :param nUnits1: The numerator units of the first set.
+    :type nUnits1: list
+    :param dUnits1: The denominator units of the first set.
+    :type dUnits1: list
+    :param nUnits2: The numerator units of the second set.
+    :type nUnits2: list
+    :param dUnits2: The denominator units of the second set.
+    :type dUnits2: list
+    :return: The multiplied units.
+    :rtype: tuple
     """
     nUnits = nUnits1 + nUnits2
     dUnits = dUnits1 + dUnits2
@@ -234,6 +291,13 @@ class Measurement:
   def formatUnits(nUnits, dUnits):
     """
     Formats a set of units into a string.
+
+    :param nUnits: The numerator units.
+    :type nUnits: list
+    :param dUnits: The denominator units.
+    :type dUnits: list
+    :return: The formatted units.
+    :rtype: str
     """
     combinedNUnits = sorted([i if nUnits.count(i) == 1 else f'{i}^{nUnits.count(i)}' for i in set(nUnits)])
     combinedDUnits = sorted([i if dUnits.count(i) == 1 else f'{i}^{dUnits.count(i)}' for i in set(dUnits)])
@@ -248,36 +312,64 @@ class Measurement:
   def __eq__(self, other):
     """
     Returns True if the two Measurement objects are equal.
+
+    :param other: The Measurement object to compare.
+    :type other: Measurement
+    :returns: True if the two Measurement objects are equal.
+    :rtype: bool
     """
     return self.sample == other.sample
 
   def __lt__(self, other):
     """
     Returns True if the first Measurement object is less than the second.
+
+    :param other: The Measurement object to compare.
+    :type other: Measurement
+    :returns: True if the first Measurement object is less than the second.
+    :rtype: bool
     """
     return self.sample < other.sample
 
   def __gt__(self, other):
     """
     Returns True if the first Measurement object is greater than the second.
+
+    :param other: The Measurement object to compare.
+    :type other: Measurement
+    :returns: True if the first Measurement object is greater than the second.
+    :rtype: bool
     """
     return self.sample > other.sample
 
   def __le__(self, other):
     """
     Returns True if the first Measurement object is less than or equal to the second.
+
+    :param other: The Measurement object to compare.
+    :type other: Measurement
+    :returns: True if the first Measurement object is less than or equal to the second.
+    :rtype: bool
     """
     return self < other or self == other
 
   def __ge__(self, other):
     """
     Returns True if the first Measurement object is greater than or equal to the second.
+
+    :param other: The Measurement object to compare.
+    :type other: Measurement
+    :returns: True if the first Measurement object is greater than or equal to the second.
+    :rtype: bool
     """
     return self > other or self == other
   
   def __neg__(self):
     """
     Returns the negation of the Measurement object.
+
+    :returns: The negation of the Measurement object.
+    :rtype: Measurement
     """
     neg = self.deepCopy()
     neg.sample = -self.sample
@@ -286,6 +378,11 @@ class Measurement:
   def __add__(self, other):
     """
     Returns the sum of the two Measurement objects.
+
+    :param other: The Measurement object to add.
+    :type other: Measurement
+    :returns: The sum of the two Measurement objects.
+    :rtype: Measurement
     """
     if self.nUnits != other.nUnits or self.dUnits != other.dUnits:
       raise Exception(f'Measurement Error: Cannot add {self} and {other} with different units.')
@@ -298,24 +395,44 @@ class Measurement:
   def __radd__(self, other):
     """
     Returns the sum of the two Measurement objects.
+
+    :param other: The Measurement object to add to.
+    :type other: Measurement
+    :returns: The sum of the two Measurement objects.
+    :rtype: Measurement
     """
     return self + other
   
   def __sub__(self, other):
     """
     Returns the difference of the two Measurement objects.
+
+    :param other: The Measurement object to subtract.
+    :type other: Measurement
+    :returns: The difference of the two Measurement objects.
+    :rtype: Measurement
     """
     return -other + self
 
   def __rsub__(self, other):
     """
     Returns the difference of the two Measurement objects.
+
+    :param other: The Measurement object to subtract from.
+    :type other: Measurement
+    :returns: The difference of the two Measurement objects.
+    :rtype: Measurement
     """
     return -self + other
 
   def __mul__(self, other):
     """
     Returns the product of the two Measurement objects.
+
+    :param other: The Measurement object to multiply by.
+    :type other: Measurement
+    :returns: The product of the two Measurement objects.
+    :rtype: Measurement
     """
     if isinstance(other, float) or isinstance(other, int):
       other = Measurement.fromFloat(other)
@@ -329,12 +446,22 @@ class Measurement:
   def __rmul__(self, other):
     """
     Returns the product of the two Measurement objects.
+
+    :param other: The Measurement object to multiply by.
+    :type other: Measurement
+    :returns: The product of the two Measurement objects.
+    :rtype: Measurement
     """
     return self * other
 
   def __truediv__(self, other):
     """
     Returns the quotient of the two Measurement objects.
+
+    :param other: The Measurement object to divide by.
+    :type other: Measurement
+    :returns: The quotient of the two Measurement objects.
+    :rtype: Measurement
     """
     if isinstance(other, float) or isinstance(other, int):
       other = Measurement.fromFloat(other)
@@ -348,12 +475,22 @@ class Measurement:
   def __rtruediv__(self, other):
     """
     Returns the quotient of the two Measurement objects.
+
+    :param other: The Measurement object to divide by.
+    :type other: Measurement
+    :returns: The quotient of the two Measurement objects.
+    :rtype: Measurement
     """
     return other / self
 
   def __pow__(self, integer):
     """
     Returns the Measurement object raised to the given integer power.
+
+    :param integer: The integer power to raise the Measurement object to.
+    :type integer: int
+    :returns: The Measurement object raised to the given integer power.
+    :rtype: Measurement
     """
     product = Measurement('1', precision=float('inf'))
     for i in range(integer):
@@ -363,6 +500,11 @@ class Measurement:
   def sum(measurements):
     """
     Returns the sum of the given list of Measurement objects.
+
+    :param measurements: The list of Measurement objects.
+    :type measurements: list
+    :returns: The sum of the given list of Measurement objects.
+    :rtype: Measurement
     """
     if not measurements:
       return Measurement.fromStr('0c')
@@ -374,6 +516,11 @@ class Measurement:
   def max(measurements):
     """
     Returns the maximum of the given list of Measurement objects.
+
+    :param measurements: The list of Measurement objects.
+    :type measurements: list
+    :returns: The maximum of the given list of Measurement objects.
+    :rtype: Measurement
     """
     m = measurements[0]
     for i in measurements[1:]:
@@ -384,6 +531,11 @@ class Measurement:
   def min(measurements):
     """
     Returns the minimum of the given list of Measurement objects.
+
+    :param measurements: The list of Measurement objects.
+    :type measurements: list
+    :returns: The minimum of the given list of Measurement objects.
+    :rtype: Measurement
     """
     m = measurements[0]
     for i in measurements[1:]:
