@@ -20,6 +20,7 @@ View on `PyPi <https://pypi.org/project/pymeasurement/>`_ and on `Github <https:
    get_started
    basics
    initialize
+   operations
    documentation/index
    genindex
 

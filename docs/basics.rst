@@ -1,11 +1,6 @@
 Measurement Basics
 ==================
 
-.. testsetup:: 
-
-    from pymeasurement import Measurement
-    m = Measurement("2.00", uncertainty="1.57", units="m", uncertaintyPercent=True)
-
 Every measurement has a sample, uncertainty, and units.
 
 The uncertainty can be expressed as an absolute value or as a relative percentage.
@@ -14,7 +9,13 @@ The uncertainty can be expressed as an absolute value or as a relative percentag
 
 The below method mutates the measurement uncertainty style in-place.
 
+.. testsetup:: *
+
+    from pymeasurement import Measurement
+
 .. doctest:: python
+
+        >>> m = Measurement("2.00", uncertainty="1.57", units="m", uncertaintyPercent=True)
 
         >>> m.toAbsolute()
         2.00 +/- 0.03 m

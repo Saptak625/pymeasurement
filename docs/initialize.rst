@@ -1,16 +1,15 @@
 Create Measurements
 ===================
 
-.. testsetup:: 
-
-    from pymeasurement import Measurement
-
-
 There are various ways to create measurements.
 
 Every measurement has a sample and an uncertainty. If the uncertainty is not given, it is assumed to be zero and hence the measurement is infinitely precise.
 
 **Using Constructor**
+
+.. testsetup:: *
+
+    from pymeasurement import Measurement
 
 .. doctest:: python
 
