@@ -1,4 +1,5 @@
 from pymeasurement.sigfig import SigFig
+import math
 
 class Measurement:
   """
@@ -542,3 +543,16 @@ class Measurement:
       if m > i:
         m = i
     return m
+
+  def average(measurements):
+    """
+    Returns the average of the given list of Measurement objects. Uses (max - min) / (2 * sqrt(n)) as the uncertainty.
+
+    :param measurements: The list of Measurement objects.
+    :type measurements: list
+    :returns: The average of the given list of Measurement objects.
+    :rtype: Measurement
+    """
+    avg_sample = Measurement.sum(measurements) / len(measurements)
+    avg_uncertainty = (Measurement.max(measurements) - Measurement.min(measurements)).sample / (2 * math.sqrt(len(measurements)))
+    return Measurement(avg_sample.sample, uncertainty=avg_uncertainty, units=avg_sample.units)

@@ -19,12 +19,13 @@ release = '1.0.6'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    'sphinx_copybutton',
     'sphinx.ext.autodoc',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
     'sphinx.ext.doctest',
     'sphinx.ext.mathjax',
+    'sphinx_copybutton',
+    'sphinxcontrib.exceltable'
 ]
 
 templates_path = ['_templates']

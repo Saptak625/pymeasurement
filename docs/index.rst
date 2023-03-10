@@ -23,6 +23,7 @@ View on `PyPi <https://pypi.org/project/pymeasurement/>`_ and on `Github <https:
    operations
    physics_example
    chemistry_example
+   lab_example
    documentation/index
    genindex
 

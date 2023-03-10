@@ -173,6 +173,8 @@ class SigFig:
     :return: The sum of the two SigFig objects as a new SigFig object.
     :rtype: SigFig
     """
+    if isinstance(other, float) or isinstance(other, int):
+      other = SigFig(str(other), constant=True)
     decimals = max(self.decimals, other.decimals)
     return SigFig(str(self.decimalValue + other.decimalValue), decimals=decimals, constant=decimals == float('-inf'))
   
@@ -194,6 +196,8 @@ class SigFig:
     :return: The difference of the two SigFig objects as a new SigFig object.
     :rtype: SigFig
     """
+    if isinstance(other, float) or isinstance(other, int):
+      other = SigFig(str(other), constant=True)
     return -other + self
 
   def __rsub__(self, other):
@@ -214,6 +218,8 @@ class SigFig:
     :return: The product of the two SigFig objects as a new SigFig object.
     :rtype: SigFig
     """
+    if isinstance(other, float) or isinstance(other, int):
+      other = SigFig(str(other), constant=True)
     sigfigs = min(self.sigfigs, other.sigfigs)
     return SigFig(str(self.decimalValue * other.decimalValue), sigfigs=sigfigs, constant=sigfigs == float('inf'))
 
@@ -235,6 +241,8 @@ class SigFig:
     :return: This SigFig object divided by the other SigFig object.
     :rtype: SigFig
     """
+    if isinstance(other, float) or isinstance(other, int):
+      other = SigFig(str(other), constant=True)
     sigfigs = min(self.sigfigs, other.sigfigs)
     return SigFig(str(self.decimalValue / other.decimalValue), sigfigs=sigfigs, constant=sigfigs == float('inf'))
 

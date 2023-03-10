@@ -151,3 +151,13 @@ class TestMeasurement(unittest.TestCase):
         self.assertEqual(m4.uncertainty, SigFig("0.1"))
         self.assertEqual(m4.units, "m")
         self.assertEqual(str(m4), "2.0 +/- 0.1 m")    
+
+    def test_average_measurements(self):
+        m1 = Measurement.fromStr("2.0 +/- 0.13 m")
+        m2 = Measurement.fromStr("3.0 +/- 0.1 m")
+        m3 = Measurement.fromStr("4.0 +/- 0.1 m")
+        m4 = Measurement.average([m1, m2, m3])
+        self.assertEqual(m4.sample, SigFig("3.0"))
+        self.assertEqual(m4.uncertainty, SigFig("0.58"))
+        self.assertEqual(m4.units, "m")
+        self.assertEqual(str(m4), "3.0 +/- 0.6 m")
