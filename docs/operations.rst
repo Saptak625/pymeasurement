@@ -9,7 +9,7 @@ The following operations are available for measurements:
 * ``/``: Divide two measurements or a measurement and a float.
 * ``-``: Negate a measurement.
 * ``**``: Raise a measurement to an integer power.
-* ``abs()``: Return the absolute value of a measurement.
+
 
 All of these operations return a new measurement object.
 
@@ -30,23 +30,21 @@ All of these operations return a new measurement object.
         0.43 +/- 0.02 m/s
 
         >>> a * b
-        8.5 +/- 0.2 m^2/s^2
+        8.51 +/- 0.69% m^2/s^2
 
         >>> a / b
-        1.15 +/- 0.02
+        1.16 +/- 0.69%
         
         >>> a * 2
-        6.28 +/- 0.02 m/s
+        6.28 +/- 0.32% m/s
         
         >>> a / 2
-        1.57 +/- 0.01 m/s
+        1.57 +/- 0.32% m/s
         
         >>> -a
         -3.14 +/- 0.01 m/s
         
         >>> a ** 2
-        9.9 +/- 0.1 m^2/s^2
+        9.86 +/- 0.64% m^2/s^2
         
-        >>> abs(-a)
-        3.14 +/- 0.01 m/s
 

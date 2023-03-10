@@ -21,6 +21,8 @@ View on `PyPi <https://pypi.org/project/pymeasurement/>`_ and on `Github <https:
    basics
    initialize
    operations
+   physics_example
+   chemistry_example
    documentation/index
    genindex
 

@@ -214,7 +214,7 @@ class Measurement:
     """
     if not self.uncertaintyPercent and isinstance(self.uncertainty, SigFig):
       self.uncertaintyPercent = True
-      self.uncertainty *= (SigFig('100', constant=True) / self.sample).abs()
+      self.uncertainty = SigFig(self.uncertainty.value, constant=True) * SigFig((SigFig('100', constant=True) / self.sample).abs().value, constant=True)
       self.uncertainty = SigFig(str(self.uncertainty.decimalValue), sigfigs=(2 if self.uncertainty < SigFig('2', constant=True) else 1))
     return self
 

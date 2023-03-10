@@ -5,6 +5,7 @@ Every measurement has a sample, uncertainty, and units.
 
 The uncertainty can be expressed as an absolute value or as a relative percentage.
 
+
 **In-Place Mutation**
 
 The below method mutates the measurement uncertainty style in-place.
@@ -15,7 +16,7 @@ The below method mutates the measurement uncertainty style in-place.
 
 .. doctest:: python
 
-        >>> m = Measurement("2.00", uncertainty="1.57", units="m", uncertaintyPercent=True)
+        >>> m = Measurement.fromStr("2.00 +/- 0.03 m")
 
         >>> m.toAbsolute()
         2.00 +/- 0.03 m
@@ -26,10 +27,10 @@ The below method mutates the measurement uncertainty style in-place.
 .. doctest:: python
 
         >>> m.toPercent()
-        2.00 +/- 1.6% m
+        2.00 +/- 1.5% m
 
         >>> m
-        2.00 +/- 1.6% m
+        2.00 +/- 1.5% m
 
 **Immutable**
 
@@ -43,4 +44,4 @@ The below method creates a new measurement object with the given uncertainty sty
 .. doctest:: python
 
         >>> m.percent()
-        2.00 +/- 1.6% m
+        2.00 +/- 1.5% m
