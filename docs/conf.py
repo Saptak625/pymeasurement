@@ -25,7 +25,7 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinx.ext.mathjax',
     'sphinx_copybutton',
-    'sphinxcontrib.exceltable'
+    'sphinxcontrib.excel_table'
 ]
 
 templates_path = ['_templates']
