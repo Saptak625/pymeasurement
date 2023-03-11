@@ -12,7 +12,7 @@ Calculate the relationship between the molar enthalpy of combustion and the carb
 **Data Table throughout Calorimetry Lab**
 
 .. excel-table:: 
-    :file: _static\Combustion_Lab_1920_Student_Data.xlsx
+    :file: _static/Combustion_Lab_1920_Student_Data.xlsx
     :selection: A1:F24
 
 Solution
@@ -23,7 +23,7 @@ The data from the lab is imported into a Pandas DataFrame.
 .. doctest:: python
 
     >>> import pandas as pd
-    >>> df = pd.read_excel('_static\Combustion_Lab_1920_Student_Data.xlsx')
+    >>> df = pd.read_excel('_static/Combustion_Lab_1920_Student_Data.xlsx')
 
 The DataFrame columns are converted into pymeasurement Measurements.
 
@@ -63,7 +63,7 @@ Now using the below formulas, the enthalpy of combustion can be calculated for e
 **Results Table 1: Individual Molar Enthalpy of Combustion**
 
 .. excel-table:: 
-    :file: _static\output.xlsx
+    :file: _static/output.xlsx
     :selection: A1:G24
 
 Now, to calculate the average molar enthalpy of combustion for each of the alcohols, the data is grouped by alcohol type and the average is taken.
@@ -81,7 +81,7 @@ Now, to calculate the average molar enthalpy of combustion for each of the alcoh
 **Results Table 2: Average Molar Enthalpy of Combustion**
 
 .. excel-table:: 
-    :file: _static\output.xlsx
+    :file: _static/output.xlsx
     :selection: J1:M5
 
 
@@ -100,11 +100,11 @@ Finally, we can convert the Measurement columns back into standard numeric colum
 **Final Results Table 1: Individual Molar Enthalpy of Combustion**
 
 .. excel-table:: 
-    :file: _static\output.xlsx
+    :file: _static/output.xlsx
     :selection: A31:K54
 
 **Final Results Table 2: Average Molar Enthalpy of Combustion**
 
 .. excel-table:: 
-    :file: _static\output.xlsx
+    :file: _static/output.xlsx
     :selection: P31:T35
