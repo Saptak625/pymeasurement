@@ -5,9 +5,10 @@ pymeasurement can be used with Pandas DataFrames to perform precision-based unce
 
 **Original Data Table**
 
-.. excel-table:: 
-    :file: _static/example.xlsx
+.. exceltable:: 
+    :file: example.xls
     :selection: A1:C7
+    :header: 1
 
 In order to acheive this, the DataFrame is converted into Measurement objects for calculations using the below. 
 
@@ -16,7 +17,7 @@ All data can be normalized in this step as well.
 .. doctest:: python
 
     >>> import pandas as pd
-    >>> df = pd.read_excel('_static/example.xlsx')
+    >>> df = pd.read_excel('example.xlsx')
     >>> from pymeasurement import Measurement as M
     >>> converted = pd.DataFrame()
     >>> converted['Mass (± 0.001 kg)'] = M.importColumn(df['Mass (± 0.001 kg)'], d=True, un='kg', decimals=3)
@@ -24,9 +25,10 @@ All data can be normalized in this step as well.
 
 **Converted Data Table**
 
-.. excel-table:: 
-    :file: _static/example.xlsx
+.. exceltable:: 
+    :file: example.xls
     :selection: F1:G7
+    :header: 1
 
 Now calculations can easily be performed on the DataFrame using the Measurement objects.
 
@@ -36,9 +38,10 @@ Now calculations can easily be performed on the DataFrame using the Measurement 
 
 **Calculated Data Table**
 
-.. excel-table:: 
-    :file: _static/example.xlsx
+.. exceltable:: 
+    :file: example.xls
     :selection: J1:L7
+    :header: 1
 
 Once the calculations are complete, the DataFrame can be converted back into a numeric types using the below.
 
@@ -49,6 +52,7 @@ Once the calculations are complete, the DataFrame can be converted back into a n
     >>> M.exportColumn(final_table, converted['Average Acceleration (m/s^2)'])
     >>> M.exportColumn(final_table, converted['Force (N)'], asPercent=False)
 
-.. excel-table:: 
-    :file: _static/example.xlsx
+.. exceltable:: 
+    :file: example.xls
     :selection: O1:S7
+    :header: 1
