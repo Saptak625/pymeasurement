@@ -13,7 +13,6 @@ Calculate the relationship between the molar enthalpy of combustion and the carb
 
 .. excel-table:: 
     :file: _static\Combustion_Lab_1920_Student_Data.xlsx
-    :header: 1
     :selection: A1:F24
 
 Solution
@@ -65,7 +64,6 @@ Now using the below formulas, the enthalpy of combustion can be calculated for e
 
 .. excel-table:: 
     :file: _static\output.xlsx
-    :header: 1
     :selection: A1:G24
 
 Now, to calculate the average molar enthalpy of combustion for each of the alcohols, the data is grouped by alcohol type and the average is taken.
@@ -84,7 +82,6 @@ Now, to calculate the average molar enthalpy of combustion for each of the alcoh
 
 .. excel-table:: 
     :file: _static\output.xlsx
-    :header: 1
     :selection: J1:M5
 
 
@@ -104,12 +101,10 @@ Finally, we can convert the Measurement columns back into standard numeric colum
 
 .. excel-table:: 
     :file: _static\output.xlsx
-    :header: 1
     :selection: A31:K54
 
 **Final Results Table 2: Average Molar Enthalpy of Combustion**
 
 .. excel-table:: 
     :file: _static\output.xlsx
-    :header: 1
     :selection: P31:T35
