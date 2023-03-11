@@ -6,7 +6,7 @@ pymeasurement can be used with Pandas DataFrames to perform precision-based unce
 **Original Data Table**
 
 .. excel-table:: 
-    :file: _static\example.xlsx
+    :file: _static/example.xlsx
     :selection: A1:C7
 
 In order to acheive this, the DataFrame is converted into Measurement objects for calculations using the below. 
@@ -16,7 +16,7 @@ All data can be normalized in this step as well.
 .. doctest:: python
 
     >>> import pandas as pd
-    >>> df = pd.read_excel('_static\example.xlsx')
+    >>> df = pd.read_excel('_static/example.xlsx')
     >>> from pymeasurement import Measurement as M
     >>> converted = pd.DataFrame()
     >>> converted['Mass (± 0.001 kg)'] = M.importColumn(df['Mass (± 0.001 kg)'], d=True, un='kg', decimals=3)
@@ -25,7 +25,7 @@ All data can be normalized in this step as well.
 **Converted Data Table**
 
 .. excel-table:: 
-    :file: _static\example.xlsx
+    :file: _static/example.xlsx
     :selection: F1:G7
 
 Now calculations can easily be performed on the DataFrame using the Measurement objects.
@@ -37,7 +37,7 @@ Now calculations can easily be performed on the DataFrame using the Measurement 
 **Calculated Data Table**
 
 .. excel-table:: 
-    :file: _static\example.xlsx
+    :file: _static/example.xlsx
     :selection: J1:L7
 
 Once the calculations are complete, the DataFrame can be converted back into a numeric types using the below.
@@ -50,5 +50,5 @@ Once the calculations are complete, the DataFrame can be converted back into a n
     >>> M.exportColumn(final_table, converted['Force (N)'], asPercent=False)
 
 .. excel-table:: 
-    :file: _static\example.xlsx
+    :file: _static/example.xlsx
     :selection: O1:S7
