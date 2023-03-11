@@ -7,7 +7,6 @@ pymeasurement can be used with Pandas DataFrames to perform precision-based unce
 
 .. excel-table:: 
     :file: _static\example.xlsx
-    :header: 1
     :selection: A1:C7
 
 In order to acheive this, the DataFrame is converted into Measurement objects for calculations using the below. 
@@ -27,7 +26,6 @@ All data can be normalized in this step as well.
 
 .. excel-table:: 
     :file: _static\example.xlsx
-    :header: 1
     :selection: F1:G7
 
 Now calculations can easily be performed on the DataFrame using the Measurement objects.
@@ -40,7 +38,6 @@ Now calculations can easily be performed on the DataFrame using the Measurement 
 
 .. excel-table:: 
     :file: _static\example.xlsx
-    :header: 1
     :selection: J1:L7
 
 Once the calculations are complete, the DataFrame can be converted back into a numeric types using the below.
@@ -54,5 +51,4 @@ Once the calculations are complete, the DataFrame can be converted back into a n
 
 .. excel-table:: 
     :file: _static\example.xlsx
-    :header: 1
     :selection: O1:S7
