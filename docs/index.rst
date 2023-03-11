@@ -21,6 +21,8 @@ View on `PyPi <https://pypi.org/project/pymeasurement/>`_ and on `Github <https:
    basics
    initialize
    operations
+   aggregate_operations
+   table_operations
    physics_example
    chemistry_example
    lab_example

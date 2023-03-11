@@ -555,4 +555,83 @@ class Measurement:
     """
     avg_sample = Measurement.sum(measurements) / len(measurements)
     avg_uncertainty = (Measurement.max(measurements) - Measurement.min(measurements)).sample / (2 * math.sqrt(len(measurements)))
-    return Measurement(avg_sample.sample, uncertainty=avg_uncertainty, units=avg_sample.units)
+    return Measurement(avg_sample.sample, uncertainty=avg_uncertainty.value, units=avg_sample.units)
+
+  def convert(sample, uncertainty=None, uncertaintyPercent=False, units='', analog=False, digital=False, constant=False, u=None, up=False, a=False, d=False, un='', decimals=None):
+    """
+    Returns a Measurement object with the given sample, uncertainty, and units.
+    
+    :param sample: The sample of the Measurement object.
+    :type sample: float or str
+    :param uncertainty: The uncertainty of the Measurement object.
+    :type uncertainty: float or str
+    :param uncertaintyPercent: Whether the uncertainty is a percent.
+    :type uncertaintyPercent: bool
+    :param units: The units of the Measurement object.
+    :type units: str
+    :param analog: Whether the Measurement object is analog.
+    :type analog: bool
+    :param digital: Whether the Measurement object is digital.
+    :type digital: bool
+    :param constant: Whether the Measurement object is constant.
+    :type constant: bool
+    :param u: The uncertainty of the Measurement object.
+    :type u: float or str
+    :param up: Whether the uncertainty is a percent.
+    :type up: bool
+    :param a: Whether the Measurement object is analog.
+    :type a: bool
+    :param d: Whether the Measurement object is digital.
+    :type d: bool
+    :param un: The units of the Measurement object.
+    :type un: str
+    :param decimals: The number of decimals to round to.
+    :type decimals: int
+    """
+    if u is not None:
+      uncertainty = u
+    if up:
+      uncertaintyPercent = up
+    if a:
+      analog = a
+    if d:
+      digital = d
+    if un:
+      units = un
+
+    return Measurement(SigFig(str(sample), decimals=-decimals if decimals is not None else None), uncertaintyPercent=uncertaintyPercent, uncertainty=str(uncertainty) if uncertainty is not None else None, precision=float('inf') if constant else None, units=units, analog=analog, digital=digital)
+  
+  def importColumn(column, uncertaintyColumn=None, df=None, **kwargs):
+    """
+    Convert a numeric Pandas DataFrame column to Measurement objects.
+    
+    :param column: The numeric Pandas DataFrame column.
+    :type column: pandas.core.series.Series
+    :param kwargs: Keyword arguments to pass to Measurement.convert.
+    :type kwargs: dict
+    """
+    if uncertaintyColumn is None:
+      return column.apply(Measurement.convert, **kwargs)
+    else:
+      return df.apply(lambda x: Measurement.convert(x[column.name], u=x[uncertaintyColumn.name], **kwargs), axis=1)
+
+  def exportColumn(savedf, column, addUncertainty=True, asPercent=True):
+    """
+    Convert a Measurement Pandas DataFrame column to numeric values.
+
+    :param savedf: The Pandas DataFrame to save to.
+    :type savedf: pandas.core.frame.DataFrame
+    :param column: The Measurement Pandas DataFrame column.
+    :type column: pandas.core.series.Series
+    :param addUncertainty: Whether to add the uncertainty to the DataFrame.
+    :type addUncertainty: bool
+    :param asPercent: Whether to add the uncertainty as a percent.
+    :type asPercent: bool
+    """
+    savedf[column.name] = column.apply(lambda x: x.sample)
+    if addUncertainty:
+      label, units = (' ('.join(column.name.split(' (')[:-1]), ' (' + column.name.split(' (')[-1]) if ' (' in column.name else (column.name, '')
+      if asPercent:
+        savedf.insert(savedf.columns.get_loc(column.name) + 1, f'{label} Percent Uncertainty (%)', column.apply(lambda x: x.percent().uncertainty))
+      else:
+        savedf.insert(savedf.columns.get_loc(column.name) + 1, f'{label} Absolute Uncertainty{units}', column.apply(lambda x: x.absolute().uncertainty))
