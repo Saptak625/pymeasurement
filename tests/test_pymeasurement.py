@@ -158,6 +158,6 @@ class TestMeasurement(unittest.TestCase):
         m3 = Measurement.fromStr("4.0 +/- 0.1 m")
         m4 = Measurement.average([m1, m2, m3])
         self.assertEqual(m4.sample, SigFig("3.0"))
-        self.assertEqual(m4.uncertainty, SigFig("0.58"))
+        self.assertEqual(m4.uncertainty, SigFig("0.6"))
         self.assertEqual(m4.units, "m")
         self.assertEqual(str(m4), "3.0 +/- 0.6 m")
