@@ -26,7 +26,7 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinx.ext.mathjax',
     'sphinx_copybutton',
-    'exceltable'
+    'sphinxcontrib.exceltable'
 ]
 
 sys.path.insert(0, os.path.abspath('../../src/'))
@@ -34,25 +34,5 @@ sys.path.insert(0, os.path.abspath('../../src/'))
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
-
-
-# -- Options for HTML output -------------------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
-
 html_theme = 'furo'
 html_static_path = ['_static']
-
-# html_sidebars = {
-#     "**": [
-#         "about.html",
-#         "navigation.html",
-#         "relations.html",
-#         "searchbox.html",
-#         "donate.html",
-#     ]
-# }
-# html_sidebars = {
-#     "index": ["localtoc.html", "search.html"],
-#     "**": ["localtoc.html", "search.html"],
-# }
-# singlehtml_sidebars = {"index": ["localtoc.html", "search.html"]}
