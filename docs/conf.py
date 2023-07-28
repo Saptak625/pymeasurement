@@ -29,7 +29,7 @@ extensions = [
     'sphinxcontrib.exceltable'
 ]
 
-sys.path.insert(0, os.path.abspath('../../src/'))
+sys.path.insert(0, os.path.abspath('../src/'))
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']

@@ -1,4 +1,4 @@
 furo==2022.12.7
 openpyxl==3.1.1
 sphinx-copybutton==0.5.1
-sphinxcontrib-exceltable==0.3.0.dev1
+sphinxcontrib-exceltable==0.3.0

@@ -34,4 +34,4 @@ Formulas:
         >>> h
         20 +/- 1E+1% m
 
-Thus, the time it takes to reach the maximum height is :math:`2.0 \pm 5\% \text{ s}` and the maximum height is :math:`101.5 \pm 1E+1\% \text{ m}`.
+Thus, the time it takes to reach the maximum height is :math:`2.0 \pm 5\% \text{ s}` and the maximum height is :math:`20 \pm 10\% \text{ m}`.

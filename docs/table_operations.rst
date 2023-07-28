@@ -43,7 +43,7 @@ Now calculations can easily be performed on the DataFrame using the Measurement 
     :selection: J1:L7
     :header: 1
 
-Once the calculations are complete, the DataFrame can be converted back into a numeric types using the below.
+Once the calculations are complete, the DataFrame can be converted back into numeric types using the below.
 
 .. doctest:: python
 
