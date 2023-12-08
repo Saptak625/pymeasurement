@@ -482,6 +482,8 @@ class Measurement:
     :returns: The quotient of the two Measurement objects.
     :rtype: Measurement
     """
+    if isinstance(other, float) or isinstance(other, int):
+      other = Measurement.fromFloat(other)
     return other / self
 
   def __pow__(self, integer):
