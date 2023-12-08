@@ -9,7 +9,7 @@
 project = 'pymeasurement'
 copyright = '2023, Saptak Das'
 author = 'Saptak Das'
-release = '1.1.0'
+release = '1.1.2'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
