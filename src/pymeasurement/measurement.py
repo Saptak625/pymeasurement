@@ -245,6 +245,63 @@ class Measurement:
     :rtype: Measurement
     """
     return Measurement(self.sample.deepCopy(), uncertainty = self.uncertainty.deepCopy() if self.uncertainty is not None else None, uncertaintyPercent = self.uncertaintyPercent, units=self.units)
+
+  def apply_func(func, **kwargs):
+    """
+    Applies a function to the sample and uncertainty of the Measurement object. Based on the Generalized Uncertainty Propagation Formula. Suggest the units of the result by passing a "units" kwarg.
+
+    :param func: The function expression to apply.
+    :type func: string
+    :return: The Measurement object with the function applied.
+    :rtype: Measurement
+    """
+    # Remove the units from the kwargs
+    units = None
+    if 'units' in kwargs:
+      units = kwargs.pop('units')
+
+    # Generalized Uncertainty Propagation Formula
+    # \delta f = \sqrt{\sum_{i=1}^{n} \left(\frac{\partial f}{\partial x_i}\right)^2 \delta x_i^2}
+    from sympy import Symbol, diff, sqrt, sympify
+    
+    # Define each of the kwargs as a symbol
+    symbols = {i: Symbol(i) for i in kwargs.keys()}
+
+    # Convert the function expression to a sympy expression
+    func = sympify(func)
+
+    # Evaluate the function with the given kwargs
+    eval_func = func
+    for i in kwargs.keys():
+      eval_func = eval_func.subs(symbols[i], float(kwargs[i].sample.value))
+    eval_func = SigFig(str(eval_func.evalf()), sigfigs=min((kwargs[i].sample.sigfigs for i in kwargs.keys())))
+
+    # Calculate the partial derivative of the function with respect to each symbol
+    partials = {i: diff(func, symbols[i]) for i in symbols}
+
+    # Define each of the uncertainties as \delta x_i
+    uncertainties = {f'δ{i}': Symbol(f'δ{i}') for i in kwargs.keys()}
+
+    # Determine the general uncertainty propagation formula
+    func_uncertainty = sqrt(sum([partials[i]**2 * uncertainties[f'δ{i}']**2 for i in partials]))
+
+    # Evaluate the uncertainty with the given kwargs
+    eval_uncertainty = func_uncertainty
+    for i in kwargs.keys():
+      eval_uncertainty = eval_uncertainty.subs(symbols[i], float(kwargs[i].sample.value))
+      eval_uncertainty = eval_uncertainty.subs(uncertainties[f'δ{i}'], float(kwargs[i].uncertainty.value))
+    eval_uncertainty = SigFig(str(eval_uncertainty.evalf()), decimals=eval_func.decimals)
+
+    # Return the Measurement object with the function applied
+    # If the function is log, exp, or trig, units will be dimensionless.
+    # Otherwise, units will need to be determined based on the units of the input.
+    # Check if the function is log, exp, or trig
+    if func.func.__name__ not in ['log', 'exp', 'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'sinh', 'cosh', 'tanh', 'asinh', 'acosh', 'atanh']:
+      # TODO: Derive the units of the function
+      # For example if the function is f(x) = 2x, then the units of f(x) are the units of x.
+      # If the function is f(x) = 1/x, then the units of f(x) are the inverse of the units of x.
+      pass
+    return Measurement(eval_func, uncertainty=eval_uncertainty, units=units)
   
   def __str__(self):
     """
