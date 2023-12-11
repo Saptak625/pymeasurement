@@ -260,6 +260,10 @@ class Measurement:
     if 'units' in kwargs:
       units = kwargs.pop('units')
 
+    # Convert the measurement kwargs to absolute uncertainties
+    for i in kwargs.keys():
+      kwargs[i] = Measurement.absolute(kwargs[i])
+
     # Generalized Uncertainty Propagation Formula
     # \delta f = \sqrt{\sum_{i=1}^{n} \left(\frac{\partial f}{\partial x_i}\right)^2 \delta x_i^2}
     from sympy import Symbol, diff, sqrt, sympify
